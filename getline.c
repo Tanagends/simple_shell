@@ -27,7 +27,7 @@ ssize_t _getline(char **lineptr, size_t *n, int fd)
 	buffer[total_red] = '\0';
 	len = _strlen(buffer);
 	*lineptr = malloc(len + 1);
-	memcpy((*lineptr), buffer, len + 1);
+	_memcpy((*lineptr), buffer, len + 1);
 	*n = len;
 	return ((ssize_t)len);
 }
