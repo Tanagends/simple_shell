@@ -5,7 +5,7 @@
  * @src: source block.
  * @n: number of bytes.
  */
-void *memcpy(void *dest, const void *src, size_t n)
+void *_memcpy(void *dest, const void *src, size_t n)
 {
 	size_t i;
 	char *charDest = (char *)dest;
