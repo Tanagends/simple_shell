@@ -129,7 +129,7 @@ int zimbo_path__handler(char **toks)
 
 	for (i = 0; environ[i] != NULL; i++)
 	{
-		if (strncmp(environ[i], "PATH=", 5) == 0)
+		if (_strncmp(environ[i], "PATH=", 5) == 0)
 		{
 			path = environ[i] + 5;
 			break;
@@ -142,9 +142,9 @@ int zimbo_path__handler(char **toks)
 		path_token = strtok(path_copy, ":");
 		while (path_token != NULL)
 		{
-			strcpy(full_path, path_token);
-			strcat(full_path, "/");   /* Append a forward slash*/
-			strcat(full_path, toks[0]); /* Append 'command'*/
+			_strcpy(full_path, path_token);
+			_strcat(full_path, "/");   /* Append a forward slash*/
+			_strcat(full_path, toks[0]); /* Append 'command'*/
 			fd = access(full_path, X_OK);
 			if (fd == 0)
 			{
@@ -176,7 +176,7 @@ int zimbo_builtins(char **toks)
 
 	for (i = 0; i < 5; i++)
 	{
-		if (strcmp(builtstr[i], toks[0]) == 0)
+		if (_strcmp(builtstr[i], toks[0]) == 0)
 			return ((*builtfunc[i])(toks));
 	}
 	return (-1);
@@ -196,13 +196,13 @@ char *_strdup(char *str)
 		printf("string passed is NULL\n");
 		return (NULL);
 	}
-	dup = malloc(strlen(str) + 1);
+	dup = malloc(_strlen(str) + 1);
 	if (!dup)
 	{
 		perror("strdup malloc error");
 		return (NULL);
 	}
-	strcpy(dup, str);
+	_strcpy(dup, str);
 	return (dup);
 }
 */
@@ -216,18 +216,18 @@ void errmsg(char **command, char **global_argv)
 
 	if (!isatty(STDIN_FILENO))
 	{
-		strcpy(err_out, global_argv[0]);
-		strcat(err_out, ": 1: ");
-		strcat(err_out, command[0]);
-		strcat(err_out, ": not found");
-		write(STDOUT_FILENO, err_out, strlen(err_out));
+		_strcpy(err_out, global_argv[0]);
+		_strcat(err_out, ": 1: ");
+		_strcat(err_out, command[0]);
+		_strcat(err_out, ": not found");
+		write(STDOUT_FILENO, err_out, _strlen(err_out));
 		write(STDOUT_FILENO, "\n", 1);
 	}
 	else
 	{
-		strcpy(err_out, command[0]);
-		strcat(err_out, ": command not found");
-		write(STDOUT_FILENO, err_out, strlen(err_out));
+		_strcpy(err_out, command[0]);
+		_strcat(err_out, ": command not found");
+		write(STDOUT_FILENO, err_out, _strlen(err_out));
 		write(STDOUT_FILENO, "\n", 1);
 	}
 	return;

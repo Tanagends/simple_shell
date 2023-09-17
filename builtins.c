@@ -16,7 +16,7 @@ int zimbo_env(char **toks)
 	}
 	while (environ[i] != NULL)
 	{
-		write(1, environ[i], strlen(environ[i]));
+		write(1, environ[i], _strlen(environ[i]));
 		write(1, "\n", 1);
 		i++;
 	}
@@ -38,27 +38,27 @@ int zimbo_setenv(char **toks)
 	}
 	while (environ[i] != NULL)
 	{
-		if (strncmp(environ[i], toks[1], strlen(toks[1])) == 0)
+		if (_strncmp(environ[i], toks[1], _strlen(toks[1])) == 0)
 		{
 			free(environ[i]);
-			strcpy(environ[i], toks[1]);
-			strcat(environ[i], "=");
-			strcat(environ[i], toks[2]);
+			_strcpy(environ[i], toks[1]);
+			_strcat(environ[i], "=");
+			_strcat(environ[i], toks[2]);
 			return (1);
 		}
 	i++;
 	}
-	strcpy(new_env, toks[1]);
-	strcat(new_env, "=");
+	_strcpy(new_env, toks[1]);
+	_strcat(new_env, "=");
 	if (toks[2] != NULL)
-		strcat(new_env, toks[2]);
-	new_envp = malloc(strlen(new_env) + 1);
+		_strcat(new_env, toks[2]);
+	new_envp = malloc(_strlen(new_env) + 1);
 	if (new_envp == NULL)
 	{
 		write(STDERR_FILENO, "Couldn't set", 12);
 		return (1);
 	}
-	strcpy(new_envp, new_env);
+	_strcpy(new_envp, new_env);
 	environ[i] = new_envp;
 	environ[i + 1] = NULL;
 	return (1);
@@ -76,8 +76,8 @@ int exist_env(char *update, char **toks)
 	env = environ;
 	while (*env != NULL)
 	{
-		if (strncmp(*env, toks[1], strlen(toks[1])) == 0 && 
-				*env[strlen(toks[1])] == '=')
+		if (_strncmp(*env, toks[1], _strlen(toks[1])) == 0 && 
+				*env[_strlen(toks[1])] == '=')
 		{
 			*env = update;
 			return (1);
@@ -114,7 +114,7 @@ int zimbo_unset_env(char **toks)
 	}
 	while (environ[i] != NULL)
 	{
-		if (strncmp(environ[i], toks[1], strlen(toks[1])) == 0)
+		if (_strncmp(environ[i], toks[1], _strlen(toks[1])) == 0)
 			break;
 		i++;
 	}
