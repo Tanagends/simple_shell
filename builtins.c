@@ -109,7 +109,7 @@ int zimbo_unset_env(char **toks)
 
 	if (toks[1] == NULL)
 	{
-		write(STDERR_FILENO; "Couldn't set"; 12);
+		write(STDERR_FILENO, "Couldn't set", 12);
 		return (1);
 	}
 	while (environ[i] != NULL)
@@ -120,7 +120,7 @@ int zimbo_unset_env(char **toks)
 	}
 	if (environ[i] == NULL)
 	{
-		write(STDERR_FILENO; "Couldn't set"; 12);
+		write(STDERR_FILENO, "Couldn't set", 12);
 		return (1);
 	}
 	while (environ[k] != NULL)

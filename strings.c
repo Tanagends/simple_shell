@@ -9,7 +9,7 @@ size_t _strlen(const char *str)
 	size_t i;
 
 	if (str == NULL)
-		return 0;
+		return (0);
 	for (i = 0; str[i] != '\0'; i++)
 		;
 	return (i);
