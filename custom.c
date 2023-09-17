@@ -4,6 +4,7 @@
  * @dest: destination block.
  * @src: source block.
  * @n: number of bytes.
+ * Return: void.
  */
 void *_memcpy(void *dest, const void *src, size_t n)
 {
@@ -22,7 +23,6 @@ void *_memcpy(void *dest, const void *src, size_t n)
  */
 char *_strdup(char *str)
 {
-	int len;
 	char *dup;
 
 	if (str == NULL)

@@ -22,7 +22,8 @@ int zimbo_env(char **toks)
 	}
 	return (1);
 }
-/** zimbo_setenv - sets environment variables.
+/**
+ * zimbo_setenv - sets environment variables.
  * @toks: tokenized input.
  * Return: Always 1 (Success).
  */
@@ -76,7 +77,7 @@ int exist_env(char *update, char **toks)
 	env = environ;
 	while (*env != NULL)
 	{
-		if (_strncmp(*env, toks[1], _strlen(toks[1])) == 0 && 
+		if (_strncmp(*env, toks[1], _strlen(toks[1])) == 0 &&
 				*env[_strlen(toks[1])] == '=')
 		{
 			*env = update;
@@ -86,23 +87,10 @@ int exist_env(char *update, char **toks)
 	return (0);
 }
 /**
- * store_env - frees environment.
- * @envp: pointer to an env.
- */
-void store_env(char *envp)
-{
-	static char *new_envp_array[20] = {};
-	static int i = 0;
-
-	new_envp_array[i] = envp;
-	i++;
-	return;
-}
-/**
  * zimbo_unset_env - unsets an environment variable.
  * @toks: tokenized input.
- * Returupdate_env
-*We might need to alter */
+ * Return: update_env.
+ */
 int zimbo_unset_env(char **toks)
 {
 	int i = 0, k = 0;
@@ -129,4 +117,27 @@ int zimbo_unset_env(char **toks)
 	environ[i] = environ[k];
 	environ[k] = NULL;
 	return (1);
+}
+/**
+ * zimbo_builtins - checks and execute builtins.
+ * @toks: tokenized string.
+ * Return: 1
+ */
+int zimbo_builtins(char **toks)
+{
+	int i;
+	char *builtstr[] = {"cd", "setenv", "env", "exit", "unsetenv"};
+	typedef int (*Builtfunc)(char **);
+	Builtfunc builtfunc[5] = {zimbo_cd,
+				zimbo_setenv,
+				zimbo_env,
+				zimbo_exit,
+				zimbo_unset_env};
+
+	for (i = 0; i < 5; i++)
+	{
+		if (_strcmp(builtstr[i], toks[0]) == 0)
+			return ((*builtfunc[i])(toks));
+	}
+	return (-1);
 }

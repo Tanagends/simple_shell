@@ -19,7 +19,7 @@ extern char **global_argv;
 ssize_t _getline(char **lineptr, size_t *n, int fd);
 int zimbo_path__handler(char **toks);
 char **zimbo_split(char *string);
-int zimbo_execute(char **toks);
+int zimbo_execute(char **toks, char **argv);
 int zimbo_cd(char **toks);
 int zimbo_env(char **toks);
 int zimbo_setenv(char **toks);
@@ -37,7 +37,7 @@ void errmsg(char **command, char **global_argv);
 char *_strtok(char *string, const char *delimiters);
 int delim(char *token, const char *lim);
 void *_memchr(char *buffer, char c, ssize_t n);
-void err_cd(char **toks);
+void err_cd(char **toks, int i);
 void err_env(char **toks);
 int exist_env(char *update, char **toks);
 void err_home(void);
@@ -46,6 +46,8 @@ size_t _strlen(const char *str);
 char *_strcpy(char *dest, const char *src);
 char *_strcat(char *dest, const char *src);
 char *_strdup(char *str);
+int handle_commands(char *input);
+void end(char *input);
 
 typedef int (*Builtfunc[])(char **toks);
 

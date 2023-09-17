@@ -1,42 +1,34 @@
 #include "zimbo.h"
 /**
  * main - a simple shell
+ * @argc: argument count.
+ * @argv: argument parameter list.
  * Return: 0(Always success).
  */
-/* double free error*/
-/* error messages*/
-/* executing a command only on the first prompt*/
-char **global_argv;
 int main(int argc, char *argv[])
 {
 	char *input = NULL, **toks = NULL;
 	size_t size = 0;
 	ssize_t k = 0;
-	int status = 1, i;
+	int status = 1;
 
-	global_argv = argv;
 	(void) argc;
 	signal(SIGINT, SIG_IGN);
 	while (status)
 	{
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "Zimboshell$ ", 12);
-		/*if (i != -1)*/
-	/*	{*/
 		k = getline(&input, &size, stdin);
-		/*	if (k != -1)*/
-		/*	{*/
+		if (handle_commands(input))
+		{
+			handle_commands(input);
+			continue;
+		}
 		/*k = _getline(&input, &size, STDIN_FILENO);*/
 		if (k == -1)
-		{
-			if (input != NULL)
-				free(input);
-			if (isatty(STDIN_FILENO))
-				write(STDOUT_FILENO, "\n", 1);
-			return (-1);
-		}
+			end(input);
 		toks = zimbo_split(input);
-		status = zimbo_execute(toks);
+		status = zimbo_execute(toks, argv);
 		free(toks);
 	}
 	free(input);
@@ -71,13 +63,12 @@ char **zimbo_split(char *string)
 /**
  * zimbo_execute - executes commands
  * @toks: token to a pointer
+ * @argv: main's arguments
  * Return: 1 (Success)
  */
-int zimbo_execute(char **toks)
+int zimbo_execute(char **toks, char **argv)
 {
-	pid_t _pid;
-	int status, builtins = -1, path = 0;
-	/*char *path_handler = NULL, path_handler_backup[MAX_LINE] = "";*/
+	int builtins = -1, path = 0;
 
 	if (toks[0] == NULL)
 		return (1);
@@ -115,7 +106,6 @@ void zim_exec(char *execfile, char **arguments)
 		wait(&status);
 	else
 		perror("fork error");
-	return;
 }
 /**
  * zimbo_path__handler - handles the path
@@ -157,27 +147,4 @@ int zimbo_path__handler(char **toks)
 	}
 	free(path_copy);
 	return (0);
-}
-/**
- * zimbo_builtins - checks and execute builtins.
- * @toks: tokenized string.
- * Return: 1
- */
-int zimbo_builtins(char **toks)
-{
-	int i;
-	char *builtstr[] = {"cd", "setenv", "env", "exit", "unsetenv"};
-	typedef int (*Builtfunc)(char **);
-	Builtfunc builtfunc[5] = {zimbo_cd,
-				zimbo_setenv,
-				zimbo_env,
-				zimbo_exit,
-				zimbo_unset_env};
-
-	for (i = 0; i < 5; i++)
-	{
-		if (_strcmp(builtstr[i], toks[0]) == 0)
-			return ((*builtfunc[i])(toks));
-	}
-	return (-1);
 }

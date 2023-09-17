@@ -2,12 +2,12 @@
 /**
  * _strtok - tokenizes the string.
  * @string: the string to be tokenized.
- * @delimiter: the delimiter.
+ * @delimiters: the delimiter.
  * Return: tokenized.
  */
 char *_strtok(char *string, const char *delimiters)
 {
-	static char *remaining = NULL;
+	static char *remaining;
 	char *delimptr, *token;
 
 	if (string != NULL)
@@ -32,13 +32,14 @@ char *_strtok(char *string, const char *delimiters)
 	return (token);
 }
 /**
- * delim: looks if next character is in delim
+ * delim - looks if next character is in delim.
  * @token: remaining string
- * Retturn: 1 (Success)
+ * @lim: delimiters.
+ * Return: 1 (Success)
  */
 int delim(char *token, const char *lim)
 {
-	int k = 0, i = 0;
+	int k = 0;
 	char c;
 
 	if (token == NULL || lim == NULL)

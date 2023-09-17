@@ -14,11 +14,11 @@ int zimbo_exit(char **toks)
 		exit_status = atoi(toks[1]);
 		if (exit_status != 0)
 			exit(exit_status);
-		else if (exit_status == 0 && toks[1] == "0")
+		else if (exit_status == 0 && strcmp(toks[1], "0") == 0)
 			exit(0);
 		else
 			exit(0);
-	}		
+	}
 	return (0);
 }
 /**
@@ -37,11 +37,7 @@ int zimbo_cd(char **toks)
 		return (1);
 	}
 	if (toks[1] == NULL)
-	{
 		i = cd_home();
-		if (!i)
-			err_home();
-	}
 	else if (toks[2] != NULL)
 		i = 3;
 	else if (_strcmp(toks[1], "-") == 0)
@@ -51,14 +47,10 @@ int zimbo_cd(char **toks)
 	if (i == 0)
 	{
 		if (getcwd(nwd, sizeof(nwd)) != NULL)
-		{
 			set_old_new_pwd(pwd, nwd);
-			/*free(nwd);*/
-		}
 	}
 	else
-		err_cd(toks);
-	/*free(pwd);*/
+		err_cd(toks, i);
 	return (1);
 }
 /**
@@ -89,10 +81,22 @@ int cd_home(void)
  */
 void set_old_new_pwd(char *pwd, char *nwd)
 {
-	char old[MAX_LINE], new[MAX_LINE], *oldp, *newp;
+	char old[MAX_LINE] = "", new[MAX_LINE] = "";
+	/*char *no[3] = {"setenv", "OLDPWD", pwd};*/
+	/*char *np[3] = {"setenv", "PWD", nwd};*/
 
-	memset(old, 0, sizeof(old));
-	memset(new, 0, sizeof(new));
+	/*char old[MAX_LINE] = "", new[MAX_LINE] = "";*/
+	char *oldp, *newp;
+	/*char *no[] = {"setenv", "OLDPWD", pwd, NULL}; */
+	/*char *np[] = {"setenv", "PWD", nwd, NULL};*/
+
+	/*no[0] = "setenv";*/
+	/*no[1] = "OLDPWD";*/
+	/*no[2] = pwd;*/
+
+	/*np[0] = "setenv";*/
+	/*np[1] = "PWD";*/
+	/*np[2] = nwd;*/
 	_strcpy(old, "setenv OLDPWD ");
 	_strcat(old, pwd);
 	_strcat(old, "1");
@@ -110,8 +114,8 @@ void set_old_new_pwd(char *pwd, char *nwd)
 	_strcpy(newp, new);
 	setenv("OLDPWD", pwd, 1);
 	setenv("PWD", nwd, 1);
-	free(oldp);
-	free(newp);
+	/*free(oldp);*/
+	/*free(newp);*/
 }
 /**
  * handle_cd - handles cd.
@@ -120,7 +124,7 @@ void set_old_new_pwd(char *pwd, char *nwd)
  */
 int handle_cd(char **toks)
 {
-	char *old_wd = NULL, *cwd = NULL;
+	char *old_wd = NULL;
 	int k = 0, i;
 
 	(void) toks;
@@ -134,10 +138,11 @@ int handle_cd(char **toks)
 		}
 		k++;
 	}
-	if (environ[k] == NULL)
-	{
-		/*perror("Old directory not found");*/
-		return (4);
-	}
-	/*return (i);*/
+	write(STDOUT_FILENO, "OLDPWD not set", 14);
+	/*if (environ[k] == NULL)*/
+	/*{*/
+	/*	perror("Old directory not found");*/
+	/*	return (4);*/
+	/*}*/
+	return (4);
 }

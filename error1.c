@@ -15,10 +15,11 @@ void err_home(void)
 /**
  * errmsg - displays error message.
  * @command: command entered.
+ * @global_argv: argv.
  */
 void errmsg(char **command, char **global_argv)
 {
-	char err_out [300] = "";
+	char err_out[300] = "";
 
 	if (!isatty(STDIN_FILENO))
 	{
@@ -36,5 +37,16 @@ void errmsg(char **command, char **global_argv)
 		write(STDOUT_FILENO, err_out, strlen(err_out));
 		write(STDOUT_FILENO, "\n", 1);
 	}
-	return;
+}
+/**
+ * end - ends the shell
+ * @input: user input
+ */
+void end(input)
+{
+	if (input != NULL)
+		free(input);
+	if (isatty(STDIN_FILENO))
+		write(STDOUT_FILENO, "\n", 1);
+	exit(0);
 }
