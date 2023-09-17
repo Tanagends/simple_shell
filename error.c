@@ -22,6 +22,7 @@ void err_cd(char **toks)
 			_strcat(err, " cd: ");
 			_strcat(err, toks[1]);
 			_strcat(err, ": Permission denied");
+	}
 	return;
 }
 /**

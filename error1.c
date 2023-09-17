@@ -9,7 +9,7 @@ void err_home(void)
 	_strcpy(buffer, global_argv[0]);
 	_strcat(buffer, ": cd: HOME not set");
 	write(STDOUT_FILENO, buffer, strlen(buffer));
-	write(STDOUT_FILENO, '\n', 1);
+	write(STDOUT_FILENO, "\n", 1);
 }
 
 /**

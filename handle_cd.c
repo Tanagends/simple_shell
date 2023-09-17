@@ -29,7 +29,7 @@ int zimbo_exit(char **toks)
 int zimbo_cd(char **toks)
 {
 	int i;
-	char *pwd, *nwd;
+	char pwd[300] = "", nwd[300] = "";
 
 	if (getcwd(pwd, sizeof(pwd)) == NULL)
 	{
@@ -53,12 +53,12 @@ int zimbo_cd(char **toks)
 		if (getcwd(nwd, sizeof(nwd)) != NULL)
 		{
 			set_old_new_pwd(pwd, nwd);
-			free(nwd);
+			/*free(nwd);*/
 		}
 	}
 	else
 		err_cd(toks);
-	free(pwd);
+	/*free(pwd);*/
 	return (1);
 }
 /**
