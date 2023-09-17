@@ -41,6 +41,7 @@ void err_cd(char **toks);
 void err_env(char **toks);
 int exist_env(char *update, char **toks);
 void err_home(void);
+void *_memcpy(void *dest, const void *src, size_t n);
 
 typedef int (*Builtfunc[])(char **toks);
 

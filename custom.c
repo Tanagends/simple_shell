@@ -15,3 +15,27 @@ void *memcpy(void *dest, const void *src, size_t n)
 		charDest[i] = charSrc[i];
 	return (charDest);
 }
+/**
+ * _strdup - duplicates string
+ * @str: the string.
+ * Return: the string.
+ */
+char *_strdup(char *str)
+{
+	int len;
+	char *dup;
+
+	if (str == NULL)
+	{
+		printf("string passed is NULL\n");
+		return (NULL);
+	}
+	dup = malloc(_strlen(str) + 1);
+	if (!dup)
+	{
+		perror("strdup malloc error");
+		return (NULL);
+	}
+	_strcpy(dup, str);
+	return (dup);
+}

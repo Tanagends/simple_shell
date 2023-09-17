@@ -136,7 +136,7 @@ int zimbo_path__handler(char **toks)
 		}
 	}
 	if (path)
-		path_copy = strdup(path);
+		path_copy = _strdup(path);
 	if (environ[i] != NULL)
 	{
 		path_token = strtok(path_copy, ":");
@@ -180,55 +180,4 @@ int zimbo_builtins(char **toks)
 			return ((*builtfunc[i])(toks));
 	}
 	return (-1);
-}
-/**
- * _strdup - duplicates string
- * @str: the string.
- * Return: the string.
- *
-char *_strdup(char *str)
-{
-	int len;
-	char *dup;
-
-	if (str == NULL)
-	{
-		printf("string passed is NULL\n");
-		return (NULL);
-	}
-	dup = malloc(_strlen(str) + 1);
-	if (!dup)
-	{
-		perror("strdup malloc error");
-		return (NULL);
-	}
-	_strcpy(dup, str);
-	return (dup);
-}
-*/
-/**
- * errmsg - displays error message.
- * @command: command entered.
- */
-void errmsg(char **command, char **global_argv)
-{
-	char err_out [300] = "";
-
-	if (!isatty(STDIN_FILENO))
-	{
-		_strcpy(err_out, global_argv[0]);
-		_strcat(err_out, ": 1: ");
-		_strcat(err_out, command[0]);
-		_strcat(err_out, ": not found");
-		write(STDOUT_FILENO, err_out, _strlen(err_out));
-		write(STDOUT_FILENO, "\n", 1);
-	}
-	else
-	{
-		_strcpy(err_out, command[0]);
-		_strcat(err_out, ": command not found");
-		write(STDOUT_FILENO, err_out, _strlen(err_out));
-		write(STDOUT_FILENO, "\n", 1);
-	}
-	return;
 }
