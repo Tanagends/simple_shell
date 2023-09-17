@@ -9,19 +9,19 @@ void err_cd(char **toks)
 
 	switch (errno){
 		case (ENOENT):
-			strcpy(err, global_argv[0]);
-			strcat(err, ": ");
-			strcat(err, toks[1]);
-			strcat(err, ": No such file or directory");
+			_strcpy(err, global_argv[0]);
+			_strcat(err, ": ");
+			_strcat(err, toks[1]);
+			_strcat(err, ": No such file or directory");
 			write(STDOUT_FILENO, err, strlen(err));
 			write(STDOUT_FILENO, "\n", 1);
 			break;
 		case (EACCES):
-			strcpy(err, global_argv[0]);
-			strcat(err, ": ");
-			strcat(err, " cd: ");
-			strcat(err, toks[1]);
-			strcat(err, ": Permission denied");
+			_strcpy(err, global_argv[0]);
+			_strcat(err, ": ");
+			_strcat(err, " cd: ");
+			_strcat(err, toks[1]);
+			_strcat(err, ": Permission denied");
 	return;
 }
 /**
@@ -32,9 +32,9 @@ void err_env(char **toks)
 {
 	char err[300] = "";
 
-	strcpy(err, "env: '");
-	strcat(err, toks[1]);
-	strcat(err, "': No such file or directory");
+	_strcpy(err, "env: '");
+	_strcat(err, toks[1]);
+	_strcat(err, "': No such file or directory");
 	write(STDOUT_FILENO, err, strlen(err));
 	write(STDOUT_FILENO, "\n", 1);
 	return;

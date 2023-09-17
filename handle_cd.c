@@ -44,7 +44,7 @@ int zimbo_cd(char **toks)
 	}
 	else if (toks[2] != NULL)
 		i = 3;
-	else if (strcmp(toks[1], "-") == 0)
+	else if (_strcmp(toks[1], "-") == 0)
 		i = handle_cd(toks);
 	else
 		i = chdir(toks[1]);
@@ -72,7 +72,7 @@ int cd_home(void)
 
 	while (environ[k] != NULL)
 	{
-		if (strncmp(environ[k], "HOME=", 5) == 0)
+		if (_strncmp(environ[k], "HOME=", 5) == 0)
 		{
 			homeDir = environ[k] + 5;
 			i = chdir(homeDir);
@@ -93,12 +93,12 @@ void set_old_new_pwd(char *pwd, char *nwd)
 
 	memset(old, 0, sizeof(old));
 	memset(new, 0, sizeof(new));
-	strcpy(old, "setenv OLDPWD ");
-	strcat(old, pwd);
-	strcat(old, "1");
-	strcpy(new, "setenv PWD ");
-	strcat(new, nwd);
-	strcat(new, "1");
+	_strcpy(old, "setenv OLDPWD ");
+	_strcat(old, pwd);
+	_strcat(old, "1");
+	_strcpy(new, "setenv PWD ");
+	_strcat(new, nwd);
+	_strcat(new, "1");
 	oldp = malloc(strlen(old) + 1);
 	newp = malloc(strlen(new) + 1);
 	if (newp == NULL || oldp == NULL)
@@ -106,8 +106,8 @@ void set_old_new_pwd(char *pwd, char *nwd)
 		perror("Malloc error");
 		return;
 	}
-	strcpy(oldp, old);
-	strcpy(newp, new);
+	_strcpy(oldp, old);
+	_strcpy(newp, new);
 	setenv("OLDPWD", pwd, 1);
 	setenv("PWD", nwd, 1);
 	free(oldp);
@@ -126,7 +126,7 @@ int handle_cd(char **toks)
 	(void) toks;
 	while (environ[k] != NULL)
 	{
-		if (strncmp(environ[k], "OLDPWD=", 7) == 0)
+		if (_strncmp(environ[k], "OLDPWD=", 7) == 0)
 		{
 			old_wd = environ[k] + 7;
 			i = chdir(old_wd);
