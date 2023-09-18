@@ -1,8 +1,9 @@
 #include "zimbo.h"
 /**
  * err_home - displays home error
+ * @global_argv: shell arguments.
  */
-void err_home(void)
+void err_home(char **global_argv)
 {
 	char buffer[300] = "";
 
@@ -27,8 +28,8 @@ void errmsg(char **command, char **global_argv)
 		strcat(err_out, ": 1: ");
 		strcat(err_out, command[0]);
 		strcat(err_out, ": not found");
-		write(STDOUT_FILENO, err_out, strlen(err_out));
-		write(STDOUT_FILENO, "\n", 1);
+		write(STDERR_FILENO, err_out, strlen(err_out));
+		write(STDERR_FILENO, "\n", 1);
 	}
 	else
 	{
@@ -42,7 +43,7 @@ void errmsg(char **command, char **global_argv)
  * end - ends the shell
  * @input: user input
  */
-void end(input)
+void end(char *input)
 {
 	if (input != NULL)
 		free(input);

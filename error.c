@@ -3,6 +3,7 @@
  * err_cd - displays invalid directory cd.
  * @toks: cd command.
  * @i: error.
+ * @global_argv: shell arguments.
  */
 void err_cd(char **toks, int i, char **global_argv)
 {
@@ -10,7 +11,7 @@ void err_cd(char **toks, int i, char **global_argv)
 
 	if (i == 4)
 	{
-		err_home();
+		err_home(global_argv);
 		return;
 	}
 	switch (errno)

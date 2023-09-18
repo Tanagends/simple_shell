@@ -26,7 +26,7 @@ int zimbo_exit(char **toks)
  * @toks: tokenized input.
  * Return: 1 (Success)
  */
-int zimbo_cd(char **toks)
+int zimbo_cd(char **toks, char **argv)
 {
 	int i;
 	char pwd[300] = "", nwd[300] = "";
@@ -50,7 +50,7 @@ int zimbo_cd(char **toks)
 			set_old_new_pwd(pwd, nwd);
 	}
 	else
-		err_cd(toks, i);
+		err_cd(toks, i, argv);
 	return (1);
 }
 /**

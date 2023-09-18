@@ -126,15 +126,14 @@ int zimbo_unset_env(char **toks)
 int zimbo_builtins(char **toks)
 {
 	int i;
-	char *builtstr[] = {"cd", "setenv", "env", "exit", "unsetenv"};
+	char *builtstr[] = {"setenv", "env", "exit", "unsetenv"};
 	typedef int (*Builtfunc)(char **);
-	Builtfunc builtfunc[5] = {zimbo_cd,
-				zimbo_setenv,
+	Builtfunc builtfunc[5] = {zimbo_setenv,
 				zimbo_env,
 				zimbo_exit,
 				zimbo_unset_env};
 
-	for (i = 0; i < 5; i++)
+	for (i = 0; i < 4; i++)
 	{
 		if (_strcmp(builtstr[i], toks[0]) == 0)
 			return ((*builtfunc[i])(toks));

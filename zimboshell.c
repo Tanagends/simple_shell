@@ -14,16 +14,16 @@ int main(int argc, char *argv[])
 
 	(void) argc;
 	signal(SIGINT, SIG_IGN);
-	while (status)
+	while (status == 1) 
 	{
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "Zimboshell$ ", 12);
 		k = getline(&input, &size, stdin);
-		if (handle_commands(input))
+		/*if (handle_commands(input))
 		{
 			handle_commands(input);
 			continue;
-		}
+		}*/
 		/*k = _getline(&input, &size, STDIN_FILENO);*/
 		if (k == -1)
 			end(input);
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 		free(toks);
 	}
 	free(input);
-	return (0);
+	return (status);
 }
 /**
  * zimbo_split - tokenize string.
@@ -77,12 +77,17 @@ int zimbo_execute(char **toks, char **argv)
 		zim_exec(toks[0], toks);
 		return (1);
 	}
+	if (strcmp(toks[0], "cd") == 0)
+		return (zimbo_cd(toks, argv));
 	builtins = zimbo_builtins(toks);
 	if (builtins != -1)
 		return (builtins);
 	path = zimbo_path__handler(toks);
 	if (path == 0)
-		errmsg(toks, global_argv);
+	{
+		errmsg(toks, argv);
+		return (127);
+	}
 	return (1);
 }
 /**
