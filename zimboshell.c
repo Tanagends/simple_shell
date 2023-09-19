@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 
 	(void) argc;
 	signal(SIGINT, SIG_IGN);
-	while (status == 1) 
+	while (status)
 	{
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "Zimboshell$ ", 12);
@@ -30,6 +30,8 @@ int main(int argc, char *argv[])
 		toks = zimbo_split(input);
 		status = zimbo_execute(toks, argv);
 		free(toks);
+		if (!isatty(STDIN_FILENO) && (status == 127))
+			return (errr(input));
 	}
 	free(input);
 	return (status);
@@ -98,17 +100,24 @@ int zimbo_execute(char **toks, char **argv)
 void zim_exec(char *execfile, char **arguments)
 {
 	pid_t _pid;
-	int status/*, i*/;
+	int status, ex_status/*, i*/;
 
 	_pid = fork();
 	if (_pid == 0)/* Now in the child */
 	{
 		execve(execfile, arguments, environ);
 		perror("execve error!");
-		return;
 	}
 	else if (_pid > 0)/* Now in the parent */
-		wait(&status);
+	{
+		waitpid(_pid, &status, 0);
+		if (WIFEXITED(status))
+		{
+			ex_status = WEXITSTATUS(status);
+			if ((ex_status == 2) && !isatty(STDOUT_FILENO))
+				exit(2);
+		}
+	}
 	else
 		perror("fork error");
 }

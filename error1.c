@@ -51,3 +51,14 @@ void end(char *input)
 		write(STDOUT_FILENO, "\n", 1);
 	exit(0);
 }
+
+/**
+ * err - ends the shell
+ * @input: user input
+ */
+int errr(char *input)
+{
+	if (input != NULL)
+		free(input);
+	return (127);
+}
