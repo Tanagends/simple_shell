@@ -19,11 +19,11 @@ int main(int argc, char *argv[])
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "Zimboshell$ ", 12);
 		k = getline(&input, &size, stdin);
-		/*if (handle_commands(input))
-		{
-			handle_commands(input);
-			continue;
-		}*/
+		/*if (handle_commands(input))*/
+		/*{*/
+		/*	handle_commands(input);*/
+		/*	continue;*/
+		/*}*/
 		/*k = _getline(&input, &size, STDIN_FILENO);*/
 		if (k == -1)
 			end(input);

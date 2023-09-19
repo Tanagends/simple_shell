@@ -53,8 +53,9 @@ void end(char *input)
 }
 
 /**
- * err - ends the shell
+ * errr - ends the shell
  * @input: user input
+ * Return: 127 (err for not found)
  */
 int errr(char *input)
 {
