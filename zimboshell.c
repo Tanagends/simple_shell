@@ -53,11 +53,11 @@ char **zimbo_split(char *string)
 		perror("Malloc Error");
 		exit(errno);
 	}
-	tok = strtok(string, ZIMBO_DELIM);
+	tok = _strtok(string, ZIMBO_DELIM);
 	while (tok != NULL)
 	{
 		toks[count++] = tok;
-		tok = strtok(NULL, ZIMBO_DELIM);
+		tok = _strtok(NULL, ZIMBO_DELIM);
 	}
 	toks[count] = NULL;
 	return (toks);
