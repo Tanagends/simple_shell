@@ -53,11 +53,11 @@ char **zimbo_split(char *string)
 		perror("Malloc Error");
 		exit(errno);
 	}
-	tok = _strtok(string, ZIMBO_DELIM);
+	tok = strtok(string, ZIMBO_DELIM);
 	while (tok != NULL)
 	{
 		toks[count++] = tok;
-		tok = _strtok(NULL, ZIMBO_DELIM);
+		tok = strtok(NULL, ZIMBO_DELIM);
 	}
 	toks[count] = NULL;
 	return (toks);
@@ -151,7 +151,7 @@ int zimbo_path__handler(char **toks)
 			_strcat(full_path, toks[0]); /* Append 'command'*/
 			fd = access(full_path, X_OK);
 			if (fd == 0)
-			{
+	i	{
 				zim_exec(full_path, toks);
 				free(path_copy);
 				return (1);
