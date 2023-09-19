@@ -45,11 +45,10 @@ size_t _strlen(const char *str);
 char *_strcpy(char *dest, const char *src);
 char *_strcat(char *dest, const char *src);
 char *_strdup(char *str);
-void handle_comments(char *toks)
-int handle_colon(char *input)
 int handle_commands(char *input);
 void end(char *input);
 int errr(char *input);
+
 
 /**
  * struct list_s - singly linked list

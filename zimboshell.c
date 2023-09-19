@@ -56,7 +56,7 @@ char **zimbo_split(char *string)
 	tok = strtok(string, ZIMBO_DELIM);
 	while (tok != NULL)
 	{
-	toks[count++] = tok;
+		toks[count++] = tok;
 		tok = strtok(NULL, ZIMBO_DELIM);
 	}
 	toks[count] = NULL;
@@ -70,26 +70,6 @@ char **zimbo_split(char *string)
  */
 int zimbo_execute(char **toks, char **argv)
 {
-	pid_t _pid;
-	int i, status, builtins = -1, path = 0;
-	/*char *path_handler = NULL, path_handler_backup[MAX_LINE] = "";*/
-	
-	for (i = 0; toks [i] != NULL; i++)
-	{
-	if (_strcmp(toks, "#") == 0)
-	{
-		handle_comments(toks[i]);
-		}
-	else if (_strcmp(toks, ";") == 0)
-	{
-		if (toks[i + 1] != NULL)
-	{
-		handle_colon(toks[i + 1]);
-	}
-	i++;
-	}
-}
-
 	int builtins = -1, path = 0;
 
 	if (toks[0] == NULL)
