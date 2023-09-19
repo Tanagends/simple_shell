@@ -110,8 +110,8 @@ void set_old_new_pwd(char *pwd, char *nwd)
 	_strcpy(new, "setenv PWD ");
 	_strcat(new, nwd);
 	_strcat(new, "1");
-	oldp = malloc(strlen(old) + 1);
-	newp = malloc(strlen(new) + 1);
+	oldp = malloc(_strlen(old) + 1);
+	newp = malloc(_strlen(new) + 1);
 	if (newp == NULL || oldp == NULL)
 	{
 		perror("Malloc error");
@@ -125,31 +125,43 @@ void set_old_new_pwd(char *pwd, char *nwd)
 	/*free(newp);*/
 }
 /**
- * handle_cd - handles cd.
+ * handle_cd - handles cd - command.
  * @toks: tokenized input.
  * Return: 1 (Success)
  */
-int handle_cd(char **toks)
+int handle_cd(char __attribute__((unused)) **toks)
 {
 	char *old_wd = NULL;
 	int k = 0, i;
+	char cwd[300] = "", err[300] = "./hsh: 1: cd: can't cd to ";
 
-	(void) toks;
 	while (environ[k] != NULL)
 	{
 		if (_strncmp(environ[k], "OLDPWD=", 7) == 0)
 		{
 			old_wd = environ[k] + 7;
 			i = chdir(old_wd);
+			write(STDOUT_FILENO, old_wd, _strlen(old_wd));
+			write(STDOUT_FILENO, "\n", 1);
 			return (i);
 		}
 		k++;
 	}
-	write(STDOUT_FILENO, "OLDPWD not set", 14);
-	/*if (environ[k] == NULL)*/
-	/*{*/
-	/*	perror("Old directory not found");*/
-	/*	return (4);*/
-	/*}*/
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+	{
+		write(STDOUT_FILENO, "getcwd error", 12);
+		return (4);
+	}
+	_strcat(err, cwd);
+	if (isatty(STDIN_FILENO))
+	{
+		write(STDOUT_FILENO, "OLDPWD not set", 14);
+		write(STDOUT_FILENO, "\n", 1);
+	}
+	else
+	{
+		write(STDOUT_FILENO, cwd, _strlen(cwd));
+		write(STDOUT_FILENO, "\n", 1);
+	}
 	return (4);
 }
