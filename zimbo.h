@@ -19,8 +19,8 @@ extern char **global_argv;
 ssize_t _getline(char **lineptr, size_t *n, int fd);
 int zimbo_path__handler(char **toks);
 char **zimbo_split(char *string);
-int zimbo_execute(char **toks);
-int zimbo_cd(char **toks);
+int zimbo_execute(char **toks, char **argv);
+int zimbo_cd(char **toks, char **argv);
 int zimbo_env(char **toks);
 int zimbo_setenv(char **toks);
 int zimbo_exit(char **toks);
@@ -37,17 +37,40 @@ void errmsg(char **command, char **global_argv);
 char *_strtok(char *string, const char *delimiters);
 int delim(char *token, const char *lim);
 void *_memchr(char *buffer, char c, ssize_t n);
-void err_cd(char **toks);
+void err_cd(char **toks, int i, char **global_argv);
 void err_env(char **toks);
-int exist_env(char *update, char **toks);
-void err_home(void);
+void err_home(char **global_argv);
 void *_memcpy(void *dest, const void *src, size_t n);
 size_t _strlen(const char *str);
 char *_strcpy(char *dest, const char *src);
 char *_strcat(char *dest, const char *src);
 char *_strdup(char *str);
+<<<<<<< HEAD
 void handle_comments(char *toks)
 int handle_colon(char *input)
+=======
+int handle_commands(char *input);
+void end(char *input);
+int errr(char *input);
+
+>>>>>>> 54f0b71e102e6b26db33417fcaf658e5ae2325ea
+
+/**
+ * struct list_s - singly linked list
+ * @str: string - (malloc'ed string)
+ * @len: length of the string
+ * @next: points to the next node
+ *
+ * Description: singly linked list node structure
+ */
+typedef struct alis_t
+{
+	char *str;
+	unsigned int len;
+	struct alis_t *next;
+} alist;
+alist *add_node_end(alist **head, const char *name, const char *alis);
+void free_list(alist *head);
 
 typedef int (*Builtfunc[])(char **toks);
 

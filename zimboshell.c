@@ -1,46 +1,40 @@
 #include "zimbo.h"
 /**
  * main - a simple shell
+ * @argc: argument count.
+ * @argv: argument parameter list.
  * Return: 0(Always success).
  */
-/* double free error*/
-/* error messages*/
-/* executing a command only on the first prompt*/
-char **global_argv;
 int main(int argc, char *argv[])
 {
 	char *input = NULL, **toks = NULL;
 	size_t size = 0;
 	ssize_t k = 0;
-	int status = 1, i;
+	int status = 1;
 
-	global_argv = argv;
 	(void) argc;
 	signal(SIGINT, SIG_IGN);
 	while (status)
 	{
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "Zimboshell$ ", 12);
-		/*if (i != -1)*/
-	/*	{*/
 		k = getline(&input, &size, stdin);
-		/*	if (k != -1)*/
-		/*	{*/
+		/*if (handle_commands(input))*/
+		/*{*/
+		/*	handle_commands(input);*/
+		/*	continue;*/
+		/*}*/
 		/*k = _getline(&input, &size, STDIN_FILENO);*/
 		if (k == -1)
-		{
-			if (input != NULL)
-				free(input);
-			if (isatty(STDIN_FILENO))
-				write(STDOUT_FILENO, "\n", 1);
-			return (-1);
-		}
+			end(input);
 		toks = zimbo_split(input);
-		status = zimbo_execute(toks);
+		status = zimbo_execute(toks, argv);
 		free(toks);
+		if (!isatty(STDIN_FILENO) && (status == 127))
+			return (errr(input));
 	}
 	free(input);
-	return (0);
+	return (status);
 }
 /**
  * zimbo_split - tokenize string.
@@ -71,10 +65,12 @@ char **zimbo_split(char *string)
 /**
  * zimbo_execute - executes commands
  * @toks: token to a pointer
+ * @argv: main's arguments
  * Return: 1 (Success)
  */
-int zimbo_execute(char **toks)
+int zimbo_execute(char **toks, char **argv)
 {
+<<<<<<< HEAD
 	pid_t _pid;
 	int i, status, builtins = -1, path = 0;
 	/*char *path_handler = NULL, path_handler_backup[MAX_LINE] = "";*/
@@ -94,6 +90,10 @@ int zimbo_execute(char **toks)
 	i++;
 	}
 }
+=======
+	int builtins = -1, path = 0;
+
+>>>>>>> 54f0b71e102e6b26db33417fcaf658e5ae2325ea
 	if (toks[0] == NULL)
 		return (1);
 	if (access(toks[0], X_OK) == 0)
@@ -101,12 +101,17 @@ int zimbo_execute(char **toks)
 		zim_exec(toks[0], toks);
 		return (1);
 	}
+	if (strcmp(toks[0], "cd") == 0)
+		return (zimbo_cd(toks, argv));
 	builtins = zimbo_builtins(toks);
 	if (builtins != -1)
 		return (builtins);
 	path = zimbo_path__handler(toks);
 	if (path == 0)
-		errmsg(toks, global_argv);
+	{
+		errmsg(toks, argv);
+		return (127);
+	}
 	return (1);
 }
 /**
@@ -117,20 +122,26 @@ int zimbo_execute(char **toks)
 void zim_exec(char *execfile, char **arguments)
 {
 	pid_t _pid;
-	int status/*, i*/;
+	int status, ex_status/*, i*/;
 
 	_pid = fork();
 	if (_pid == 0)/* Now in the child */
 	{
 		execve(execfile, arguments, environ);
 		perror("execve error!");
-		return;
 	}
 	else if (_pid > 0)/* Now in the parent */
-		wait(&status);
+	{
+		waitpid(_pid, &status, 0);
+		if (WIFEXITED(status))
+		{
+			ex_status = WEXITSTATUS(status);
+			if ((ex_status == 2) && !isatty(STDOUT_FILENO))
+				exit(2);
+		}
+	}
 	else
 		perror("fork error");
-	return;
 }
 /**
  * zimbo_path__handler - handles the path
@@ -172,27 +183,4 @@ int zimbo_path__handler(char **toks)
 	}
 	free(path_copy);
 	return (0);
-}
-/**
- * zimbo_builtins - checks and execute builtins.
- * @toks: tokenized string.
- * Return: 1
- */
-int zimbo_builtins(char **toks)
-{
-	int i;
-	char *builtstr[] = {"cd", "setenv", "env", "exit", "unsetenv"};
-	typedef int (*Builtfunc)(char **);
-	Builtfunc builtfunc[5] = {zimbo_cd,
-				zimbo_setenv,
-				zimbo_env,
-				zimbo_exit,
-				zimbo_unset_env};
-
-	for (i = 0; i < 5; i++)
-	{
-		if (_strcmp(builtstr[i], toks[0]) == 0)
-			return ((*builtfunc[i])(toks));
-	}
-	return (-1);
 }

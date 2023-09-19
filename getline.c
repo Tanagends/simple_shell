@@ -10,8 +10,7 @@ ssize_t _getline(char **lineptr, size_t *n, int fd)
 {
 	size_t len;
 	char buffer[MAX_LINE] = "";
-	ssize_t readd, total_red = 0, i;
-	char *tmp;
+	ssize_t readd, total_red = 0;
 
 	if (lineptr == NULL || n == NULL)
 		return (-1);
@@ -36,6 +35,7 @@ ssize_t _getline(char **lineptr, size_t *n, int fd)
  * @buffer: the string.
  * @c: the character.
  * @n: buffer character count.
+ * Return: char pointer.
  */
 void *_memchr(char *buffer, char c, ssize_t n)
 {
@@ -43,7 +43,7 @@ void *_memchr(char *buffer, char c, ssize_t n)
 
 	if (!buffer)
 		return (NULL);
-	for(i = 0; i < n; i++)
+	for (i = 0; i < n; i++)
 	{
 		if (buffer[i] == c)
 			return (buffer + i);

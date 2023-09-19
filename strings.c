@@ -42,7 +42,7 @@ char *_strcat(char *dest, const char *src)
 	size_t i = 0, k = 0;
 
 	if (dest == NULL)
-		return (src);
+		return (NULL);
 	if (src == NULL)
 		return (dest);
 	for (i = 0; dest[i] != '\0'; i++)
@@ -96,7 +96,7 @@ int _strcmp(const char *str1, const char *str2)
 		return (-1);
 	if (str2 == NULL)
 		return (1);
-	for (i = 0; str1[i] == '\0' && str2[i] == '\0'; i++)
+	for (i = 0; str1[i] != '\0' || str2[i] != '\0'; i++)
 	{
 		if (str1[i] == '\0' && str2[i] != '\0')
 			return (-1);
