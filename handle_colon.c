@@ -14,7 +14,7 @@ int handle_colon(char *input)
 		return (-1);
 	}
 	colon_tok = _strtok(input, ";");
-	
+
 	while (colon_tok != NULL)
 	{
 		i = zimbo_execute(colon_tok);
