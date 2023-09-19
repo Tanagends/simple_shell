@@ -151,7 +151,7 @@ int zimbo_path__handler(char **toks)
 			_strcat(full_path, toks[0]); /* Append 'command'*/
 			fd = access(full_path, X_OK);
 			if (fd == 0)
-	i	{
+		{
 				zim_exec(full_path, toks);
 				free(path_copy);
 				return (1);
