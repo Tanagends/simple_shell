@@ -1,5 +1,6 @@
 #include "zimbo.h"
-/** handle_colon - function to handle command separator
+/**
+ *  handle_colon - function to handle command separator
  *  @input: commands to seperate using the semi colony
  *  Return: Return nothing
 */

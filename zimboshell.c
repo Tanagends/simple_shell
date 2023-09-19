@@ -70,7 +70,6 @@ char **zimbo_split(char *string)
  */
 int zimbo_execute(char **toks, char **argv)
 {
-<<<<<<< HEAD
 	pid_t _pid;
 	int i, status, builtins = -1, path = 0;
 	/*char *path_handler = NULL, path_handler_backup[MAX_LINE] = "";*/
@@ -90,10 +89,9 @@ int zimbo_execute(char **toks, char **argv)
 	i++;
 	}
 }
-=======
+
 	int builtins = -1, path = 0;
 
->>>>>>> 54f0b71e102e6b26db33417fcaf658e5ae2325ea
 	if (toks[0] == NULL)
 		return (1);
 	if (access(toks[0], X_OK) == 0)
