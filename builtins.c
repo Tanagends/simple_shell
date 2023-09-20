@@ -29,15 +29,15 @@ int zimbo_env(char **toks)
  */
 int zimbo_setenv(char **toks)
 {
-	/*int i = 0;
-	char new_env[MAX_LINE], *new_envp;*/
+	int i = 0;
+	char new_env[MAX_LINE], *new_envp;
 
 	if (toks[1] == NULL)
 	{
 		zimbo_env(toks);
 		return (1);
 	}
-	/*while (environ[i] != NULL)
+	while (environ[i] != NULL)
 	{
 		if (_strncmp(environ[i], toks[1], _strlen(toks[1])) == 0)
 		{
@@ -61,8 +61,7 @@ int zimbo_setenv(char **toks)
 	}
 	_strcpy(new_envp, new_env);
 	environ[i] = new_envp;
-	environ[i + 1] = NULL;*/
-	setenv(toks[1], toks[2], 1);
+	environ[i + 1] = NULL;
 	return (1);
 }
 /**

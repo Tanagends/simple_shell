@@ -13,7 +13,7 @@ int zimbo_exit(char **toks)
 	if (toks[1] != NULL)
 	{
 		exit_status = atoi(toks[1]);
-		if (exit_status > 0)
+		if (exit_status > 0 || exit_status < 0)
 			exit(exit_status);
 		else if (exit_status == 0 && _strcmp(toks[1], "0") == 0)
 			return (0);
@@ -92,19 +92,15 @@ void set_old_new_pwd(char *pwd, char *nwd)
 	char old[MAX_LINE] = "", new[MAX_LINE] = "";
 	/*char *no[3] = {"setenv", "OLDPWD", pwd};*/
 	/*char *np[3] = {"setenv", "PWD", nwd};*/
-
 	/*char old[MAX_LINE] = "", new[MAX_LINE] = "";*/
 	char *oldp, *newp;
-	/*char *no[] = {"setenv", "OLDPWD", pwd, NULL}; */
-	/*char *np[] = {"setenv", "PWD", nwd, NULL};*/
-
 	/*no[0] = "setenv";*/
 	/*no[1] = "OLDPWD";*/
 	/*no[2] = pwd;*/
-
 	/*np[0] = "setenv";*/
 	/*np[1] = "PWD";*/
 	/*np[2] = nwd;*/
+
 	_strcpy(old, "setenv OLDPWD ");
 	_strcat(old, pwd);
 	_strcat(old, "1");
@@ -122,8 +118,8 @@ void set_old_new_pwd(char *pwd, char *nwd)
 	_strcpy(newp, new);
 	setenv("OLDPWD", pwd, 1);
 	setenv("PWD", nwd, 1);
-	/*free(oldp);*/
-	/*free(newp);*/
+	free(oldp);
+	free(newp);
 }
 /**
  * handle_cd - handles cd - command.
