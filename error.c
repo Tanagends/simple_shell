@@ -86,3 +86,36 @@ void err_perm(char **toks, char **argv)
 		write(STDERR_FILENO, "\n", 1);
 	}
 }
+/**
+ * exit_shell - shuts off the shell
+ * @input: user input.
+ * @toks: tokenized input.
+ */
+void exit_shell(char *input, char **toks)
+{
+	int exit_status;
+	/*char err[300] = "./hsh: 1: exit: Illegal number: ";*/
+
+	if (toks[1] != NULL)
+	{
+		exit_status = atoi(toks[1]);
+		if (exit_status > 0 || exit_status < 0)
+		{
+			free(toks);
+			free(input);
+			exit(exit_status);
+		}
+		else if (exit_status == 0 && _strcmp(toks[1], "0") == 0)
+		{
+			free(toks);
+			free(input);
+			exit(0);
+		}
+		else if (exit_status == 0 && _strcmp(toks[1], "0") != 0)
+		{
+			free(toks);
+			free(input);
+			exit(0);
+		}
+	}
+}

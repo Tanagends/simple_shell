@@ -28,6 +28,8 @@ int main(int argc, char *argv[])
 		if (k == -1)
 			end(input);
 		toks = zimbo_split(input);
+		if (_strcmp(toks[0], "exit") == 0)
+			exit_shell(input, toks);
 		status = zimbo_execute(toks, argv);
 		free(toks);
 		if (!isatty(STDIN_FILENO) && (status == 127))

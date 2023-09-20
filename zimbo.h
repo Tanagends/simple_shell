@@ -48,6 +48,7 @@ char *_strdup(char *str);
 int handle_commands(char *input);
 void end(char *input);
 int errr(char *input);
+void exit_shell(char *input, char **toks);
 
 
 /**
