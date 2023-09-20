@@ -128,7 +128,7 @@ void zim_exec(char *execfile, char **arguments)
  */
 int zimbo_path__handler(char **toks)
 {
-	char *path_token, *path_copy, *path, full_path[600] = "";
+	char *path_token, *path_copy, *path, full_path[2040] = "";
 	int i, fd;
 
 	for (i = 0; environ[i] != NULL; i++)
