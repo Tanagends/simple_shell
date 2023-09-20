@@ -8,23 +8,24 @@
 int zimbo_exit(char **toks)
 {
 	int exit_status;
-	char err[300] = "./hsh: 1: exit: Illegal number: ";
+	/*char err[300] = "./hsh: 1: exit: Illegal number: ";*/
 
 	if (toks[1] != NULL)
 	{
 		exit_status = atoi(toks[1]);
 		if (exit_status > 0)
 			exit(exit_status);
-		else /* (exit_status == 0 && _strcmp(toks[1], "0") == 0)*/
+		else if (exit_status == 0 && _strcmp(toks[1], "0") == 0)
 			return (0);
-		/*else if (exit_status < 0 || (exit_status == 0 &&*/
-		/*			_strcmp(toks[1], "0") != 0))*/
-		/*{*/
+		else if (exit_status < 0 || (exit_status == 0 &&
+					_strcmp(toks[1], "0") != 0))
+		{
 		/*	_strcat(err, toks[1]);*/
 		/*	_strcat(err, "\n");*/
 		/*	write(STDERR_FILENO, err, _strlen(err));*/
 		/*	exit(2);*/
-		/*}*/
+			return (0);
+		}
 	}
 	return (0);
 }
