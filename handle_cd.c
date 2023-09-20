@@ -17,8 +17,7 @@ int zimbo_exit(char **toks)
 			exit(exit_status);
 		else if (exit_status == 0 && _strcmp(toks[1], "0") == 0)
 			return (0);
-		else if (exit_status < 0 || (exit_status == 0 &&
-					_strcmp(toks[1], "0") != 0))
+		else if (exit_status == 0 && _strcmp(toks[1], "0") != 0)
 		{
 		/*	_strcat(err, toks[1]);*/
 		/*	_strcat(err, "\n");*/
