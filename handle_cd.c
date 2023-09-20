@@ -14,7 +14,10 @@ int zimbo_exit(char **toks)
 	{
 		exit_status = atoi(toks[1]);
 		if (exit_status > 0 || exit_status < 0)
+		{
+			free(toks);
 			exit(exit_status);
+		}
 		else if (exit_status == 0 && _strcmp(toks[1], "0") == 0)
 			return (0);
 		else if (exit_status == 0 && _strcmp(toks[1], "0") != 0)
