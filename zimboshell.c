@@ -29,11 +29,6 @@ int main(int argc, char *argv[])
 			handle_commands(input, argv);
 			continue;
 		}
-		/*if (handle_commands(input))*/
-		/*{*/
-		/*	handle_commands(input);*/
-		/*	continue;*/
-		/*}*/
 		/*k = _getline(&input, &size, STDIN_FILENO);*/
 		if (k == -1)
 			end(input);
